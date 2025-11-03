@@ -1,6 +1,8 @@
 # Student Manager 🎓
 
-![CI](https://github.com/your-username/studentsDataBase/workflows/CI/badge.svg)
-![Coverage](https://img.shields.io/badge/coverage-70%25-informational?style=flat-square)
+![CI](https://github.com/SkipBeer/studentsDataBase/workflows/CI/badge.svg)
+![Coverage](https://raw.githubusercontent.com/SkipBeer/studentsDataBase/main/coverage.svg)
 
-*Процент покрытия обновляется вручную при значительных изменениях*
+## 📊 Покрытие кода
+
+Текущее покрытие кода обновляется автоматически после каждого коммита в main ветку.
