@@ -52,9 +52,7 @@ jobs:
 
     - name: Create coverage badge
       run: |
-        anybadge --label=coverage --value=${{ env.COVERAGE_PERCENT }} --file=coverage.svg --color=green
-        # Или используем shields.io
-        # curl -o coverage.svg "https://img.shields.io/badge/coverage-${{ env.COVERAGE_PERCENT }}-green"
+        anybadge --label=coverage --value=${{ env.COVERAGE_PERCENT }} --file=coverage.svg --color=green --overwrite
 
     - name: Upload coverage badge
       uses: actions/upload-artifact@v4
