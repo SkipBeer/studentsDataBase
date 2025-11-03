@@ -10,8 +10,10 @@ struct Student {
     double gpa;
     
     bool operator==(const Student& other) const {
-        return name == other.name && age == other.age && 
-               major == other.major && gpa == other.gpa;
+        return name == other.name && 
+               age == other.age && 
+               major == other.major && 
+               gpa == other.gpa;
     }
 };
 

@@ -45,10 +45,7 @@ void Menu::getFilenameAndLoad() {
 }
 
 void Menu::run() {
-    int choice;
-    
-    InputUtils::clearInputBuffer();
-    
+    int choice;    
     do {
         showMenu();
         choice = InputUtils::getInt("Выберите действие: ", 0, 4);

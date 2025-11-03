@@ -1043,3 +1043,29 @@ dkms.conf
 *.uf2
 # Raspberry Pi Pico disassembler file
 *.dis
+
+# Билд директории
+build/
+build-coverage/
+*.o
+
+# Исполняемые файлы
+student_manager
+run_tests
+
+# Файлы покрытия
+*.gcda
+*.gcno
+*.gcov
+coverage.info
+
+# Файлы базы данных
+*.txt
+
+# IDE
+.vscode/
+.idea/
+
+# Резервные копии
+*~
+*.bak

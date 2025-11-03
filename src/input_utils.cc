@@ -2,7 +2,9 @@
 
 void InputUtils::clearInputBuffer() {
     std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (std::cin.rdbuf()->in_avail() > 0) {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 }
 
 int InputUtils::getInt(const std::string& prompt, int min, int max) {

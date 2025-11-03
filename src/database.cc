@@ -95,7 +95,10 @@ bool StudentDatabase::loadFromFile(const std::string& filename) {
 
 bool StudentDatabase::contains(const Student& student) const {
     for (const auto& s : students) {
-        if (s == student) {
+        if (s.name == student.name && 
+            s.age == student.age && 
+            s.major == student.major && 
+            s.gpa == student.gpa) {
             return true;
         }
     }
