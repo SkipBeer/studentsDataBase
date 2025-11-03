@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
@@ -35,7 +35,7 @@ jobs:
         make report
 
     - name: Upload coverage report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: coverage_report/
@@ -57,7 +57,7 @@ jobs:
         # curl -o coverage.svg "https://img.shields.io/badge/coverage-${{ env.COVERAGE_PERCENT }}-green"
 
     - name: Upload coverage badge
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-badge
         path: coverage.svg
