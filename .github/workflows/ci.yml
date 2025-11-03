@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Добавляем права на запись
 
     steps:
     - uses: actions/checkout@v4
@@ -22,42 +24,36 @@ jobs:
     - name: Build main program
       run: make
 
-    - name: Build and run tests with coverage
+    - name: Build and run tests
+      run: |
+        make test
+        ./run_tests
+
+    - name: Run tests with coverage
       run: |
         make coverage-gcovr
 
     - name: Check coverage threshold
       run: |
-        gcovr -r . --filter="src/.*" --exclude=".*test.*" --fail-under-line 50
+        gcovr -r . --filter="src/.*" --exclude=".*test.*" --fail-under-line 65
 
-    - name: Generate HTML coverage report
+    - name: Extract coverage percentage
+      id: coverage
       run: |
-        make report
-
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report
-        path: coverage_report/
+        COVERAGE=$(gcovr -r . --filter="src/.*" --exclude=".*test.*" --print-summary | grep -oP "lines: \K[0-9.]+" | head -1)
+        echo "COVERAGE_PERCENT=$COVERAGE" >> $GITHUB_ENV
+        echo "Coverage: $COVERAGE%"
 
     - name: Generate coverage badge
       run: |
-        # Извлекаем процент покрытия для бейджа
-        COVERAGE_PERCENT=$(gcovr -r . --filter="src/.*" --exclude=".*test.*" --print-summary | grep -oP "lines: \K[0-9.]+" | head -1)
-        echo "COVERAGE_PERCENT=${COVERAGE_PERCENT}%" >> $GITHUB_ENV
-        echo "Coverage: ${COVERAGE_PERCENT}%"
+        pip install anybadge
+        anybadge --label=coverage --value=${{ env.COVERAGE_PERCENT }}% --file=coverage.svg --color=green
 
-    - name: Setup Python for badge generation
-      run: pip install anybadge
-
-    - name: Create coverage badge
+    - name: Commit coverage badge to repository
+      if: github.ref == 'refs/heads/main'
       run: |
-        anybadge --label=coverage --value=${{ env.COVERAGE_PERCENT }} --file=coverage.svg --color=green
-        # Или используем shields.io
-        # curl -o coverage.svg "https://img.shields.io/badge/coverage-${{ env.COVERAGE_PERCENT }}-green"
-
-    - name: Upload coverage badge
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-badge
-        path: coverage.svg
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add coverage.svg
+        git commit -m "Update coverage badge: ${{ env.COVERAGE_PERCENT }}%" || exit 0
+        git push
