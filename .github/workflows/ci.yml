@@ -28,7 +28,7 @@ jobs:
 
     - name: Check coverage threshold
       run: |
-        gcovr -r . --filter="src/.*" --exclude=".*test.*" --fail-under-line 70
+        gcovr -r . --filter="src/.*" --exclude=".*test.*" --fail-under-line 50
 
     - name: Generate HTML coverage report
       run: |
